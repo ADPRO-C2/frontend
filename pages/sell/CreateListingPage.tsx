@@ -1,9 +1,6 @@
-// pages/create-listing.tsx
-
 import React from 'react';
 import Header from '@/components/Header';
 import NewListingForm, { NewListingData } from '@/components/sell/NewListingForm'; // Sesuaikan dengan path yang benar
-import '@/styles/globals.css';
 import { useRouter } from 'next/router';
 
 const CreateListingPage: React.FC = () => {
@@ -11,7 +8,6 @@ const CreateListingPage: React.FC = () => {
 
   const handleFormSubmit = async (newListing: NewListingData) => {
     try {
-      // Kirim data listing baru ke backend
       const response = await fetch('http://localhost:8080/api/listings', {
         method: 'POST',
         headers: {
@@ -21,8 +17,7 @@ const CreateListingPage: React.FC = () => {
       });
 
       if (response.ok) {
-        // Jika respons sukses, kembalikan pengguna ke halaman sebelumnya (mungkin kembali ke halaman katalog)
-        router.back();
+        router.push('/sell/CataloguePage');
       } else {
         console.error('Failed to add new listing');
       }

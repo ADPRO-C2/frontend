@@ -1,10 +1,7 @@
-// pages/catalogue.tsx
-
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 
 const API_URL = 'http://localhost:8080/api/listings'; // Ganti dengan URL API Anda
 

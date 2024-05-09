@@ -6,7 +6,7 @@ interface NewListingFormProps {
 }
 
 export interface NewListingData {
-  listing_id: string;
+  listingId: string;
   userId: string;
   name: string;
   description: string;
@@ -19,7 +19,7 @@ export interface NewListingData {
 const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
   const router = useRouter(); // Gunakan useRouter untuk mendapatkan objek router
   const [formData, setFormData] = useState<NewListingData>({
-    listing_id: '',
+    listingId: '',
     userId: '',
     name: '',
     description: '',
