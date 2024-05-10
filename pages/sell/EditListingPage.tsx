@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 
 const EditListingPage: React.FC = () => {
   const router = useRouter();
-  const [listing, setListing] = useState<EditedListingData | null>(null); // Definisikan state untuk menyimpan data listing
+  const [error, setError] = useState<string>('');
+  const [listing, setListing] = useState<EditedListingData | null>(null);
 
   useEffect(() => {
     const fetchListingById = async (id: string | string[]) => {
@@ -40,9 +41,11 @@ const EditListingPage: React.FC = () => {
       if (response.ok) {
         router.push('/sell/CataloguePage');
       } else {
-        console.error('Failed to edit listing');
+        setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
+        console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
       }
     } catch (error) {
+        setError('Error submitting form:')
       console.error('Error submitting form:', error);
     }
   };
@@ -51,7 +54,7 @@ const EditListingPage: React.FC = () => {
     <div>
       <Header />
       <div className="flex justify-center my-8">
-        {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} />}
+        {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} error={error}/>}
       </div>
     </div>
   );

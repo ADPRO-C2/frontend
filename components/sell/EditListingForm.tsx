@@ -3,6 +3,7 @@ import React, { useState} from 'react';
 interface EditListingFormProps {
   onSubmit: (editedListing: EditedListingData) => void;
   listing: ListingData;
+  error: string;
 }
 
 export interface ListingData {
@@ -27,7 +28,7 @@ export interface EditedListingData {
     photoUrl: string;
 }
 
-const EditListingForm: React.FC<EditListingFormProps> = ({ onSubmit, listing }) => {
+const EditListingForm: React.FC<EditListingFormProps> = ({ onSubmit, listing, error }) => {
     const [formData, setFormData] = useState<EditedListingData>(listing);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -137,6 +138,7 @@ const EditListingForm: React.FC<EditListingFormProps> = ({ onSubmit, listing }) 
                 Save Changes
             </button>
             </div>
+            {error && <p className="text-red-500 text-xs italic">{error}</p>}
         </form>
         </div>
     );

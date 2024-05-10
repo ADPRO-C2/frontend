@@ -18,6 +18,8 @@ export interface NewListingData {
 
 const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
   const router = useRouter(); // Gunakan useRouter untuk mendapatkan objek router
+  const [error, setError] = useState<string>('');
+  
   const [formData, setFormData] = useState<NewListingData>({
     listingId: '',
     userId: '',
@@ -48,12 +50,13 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        // Jika respons sukses, navigasi ke halaman /sell/CataloguePage
         router.push('/sell/CataloguePage');
       } else {
-        console.error('Failed to create listing');
+        setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
+        console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
       }
     } catch (error) {
+      setError('Error submitting form:');
       console.error('Error submitting form:', error);
     }
   };
@@ -152,6 +155,7 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
             Create Listing
           </button>
         </div>
+        {error && <p className="text-red-500 text-xs italic">{error}</p>}
       </form>
     </div>
   );
