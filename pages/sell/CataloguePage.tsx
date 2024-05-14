@@ -1,16 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 
-const API_URL = 'http://localhost:8080/api/listings'; // Ganti dengan URL API Anda
+const PROFILE_URL = 'http://34.87.10.122/profile';
+const API_BASE_URL = 'http://34.142.129.98/api/seller-listings/';
 
 interface CataloguePageProps {
   listings: Listing[];
 }
 
 const CataloguePage: React.FC<CataloguePageProps> = ({ listings: initialListings }) => {
-  const [listings, setListings] = useState<Listing[]>(initialListings); // Inisialisasi state listings dengan nilai awal dari props
+  const [listings, setListings] = useState<Listing[]>(initialListings);
+
+  useEffect(() => {
+    const fetchListings = async () => {
+      try {
+        // const profileResponse = await fetch(PROFILE_URL);
+        // const { userId } = await profileResponse.json();
+
+        const apiUrl = `${API_BASE_URL}${1}`;
+        const response = await fetch(apiUrl);
+        const listingsData: Listing[] = await response.json();
+        setListings(listingsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchListings();
+  }, []);
 
   return (
     <div>
@@ -27,7 +46,12 @@ const CataloguePage: React.FC<CataloguePageProps> = ({ listings: initialListings
 
 export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async () => {
   try {
-    const response = await fetch(API_URL);
+    
+    // const profileResponse = await fetch(PROFILE_URL);
+    // const { userId } = await profileResponse.json();
+
+    const apiUrl = `${API_BASE_URL}${1}`;
+    const response = await fetch(apiUrl);
     const listings: Listing[] = await response.json();
     return {
       props: {

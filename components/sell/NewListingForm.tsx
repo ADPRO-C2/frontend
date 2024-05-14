@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 interface NewListingFormProps {
   onSubmit: (newListing: NewListingData) => void;
+  userId: number;
 }
 
 export interface NewListingData {
   listingId: string;
-  userId: string;
+  userId: number;
   name: string;
   description: string;
   price: number;
@@ -16,13 +17,13 @@ export interface NewListingData {
   photoUrl: string;
 }
 
-const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
+const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit, userId }) => {
   const router = useRouter(); // Gunakan useRouter untuk mendapatkan objek router
   const [error, setError] = useState<string>('');
   
   const [formData, setFormData] = useState<NewListingData>({
     listingId: '',
-    userId: '',
+    userId: userId,
     name: '',
     description: '',
     price: 0,
@@ -30,6 +31,12 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
     rateCondition: 0,
     photoUrl: '',
   });
+
+  useEffect(() => {
+    if (userId) { // Ensure id is not undefined
+      setFormData(formData => ({ ...formData, userId: userId }));
+    }
+  }, [userId]); 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -42,7 +49,7 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/listing/create', {
+      const response = await fetch('http://34.142.129.98/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
