@@ -3,6 +3,7 @@ import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 
+const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
 const API_BASE_URL = 'http://34.142.129.98/api/seller-listings/';
 
@@ -16,10 +17,30 @@ const CataloguePage: React.FC<CataloguePageProps> = ({ listings: initialListings
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        // const profileResponse = await fetch(PROFILE_URL);
-        // const { userId } = await profileResponse.json();
+        // Mendapatkan token JWT palsu dengan login palsu
+        const loginResponse = await fetch(LOGIN_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username: 'rio', password: 'test1234' }),
+        });
+        const { token } = await loginResponse.json();
 
-        const apiUrl = `${API_BASE_URL}${1}`;
+        console.log(token)
+
+        const profileResponse = await fetch(PROFILE_URL, {
+          method: 'GET',
+          credentials: 'include', // Sertakan cookie dalam permintaan
+        });
+
+        const profileData = await profileResponse.json();
+        const userId = profileData.id;
+
+        console.log(userId)
+
+        // Memanggil endpoint API dengan userId
+        const apiUrl = `${API_BASE_URL}${userId}`;
         const response = await fetch(apiUrl);
         const listingsData: Listing[] = await response.json();
         setListings(listingsData);
@@ -46,16 +67,10 @@ const CataloguePage: React.FC<CataloguePageProps> = ({ listings: initialListings
 
 export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async () => {
   try {
-    
-    // const profileResponse = await fetch(PROFILE_URL);
-    // const { userId } = await profileResponse.json();
-
-    const apiUrl = `${API_BASE_URL}${1}`;
-    const response = await fetch(apiUrl);
-    const listings: Listing[] = await response.json();
+    // Tidak diperlukan karena data didapatkan secara dinamis di client side
     return {
       props: {
-        listings,
+        listings: [],
       },
     };
   } catch (error) {
