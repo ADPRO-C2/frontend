@@ -83,4 +83,5 @@ export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async 
   }
 };
 
+
 export default CataloguePage;
