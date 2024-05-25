@@ -1,4 +1,4 @@
-/* styles/global.css */
+/* styles/topupPayment.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -44,4 +44,50 @@
     width: 100%;
     margin-top: 20px;
   }
+
+  .card-container {
+    @apply flex flex-wrap gap-4 justify-start; /* Adds gap between cards */
+  }
+
+  .card {
+    @apply relative bg-white rounded-lg shadow-md p-4 flex flex-col justify-between min-w-[280px] max-w-[calc(50%-1rem)] mb-4; /* Ensures cards are the same size with spacing */
+  }
+
+  .card-title {
+    @apply text-lg font-bold mb-2;
+  }
+
+  .card-details {
+    @apply text-base text-gray-600;
+  }
+  
+  .delete-button {
+    @apply absolute right-2 bottom-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex items-center justify-center w-8 h-8; /* Styling for buttons */
+  }
+
+  .delete-button {
+    @apply bg-red-400; /* Lighter red background */
+  }
+
+  .status-pending .card-title {
+    @apply text-yellow-600; /* Darker shade for better visibility if needed */
+  }
+  
+  .status-approved .card-title {
+    @apply text-green-600;
+  }
+  
+  .status-rejected .card-title {
+    @apply text-red-600;
+  }
+  
+  .status-canceled .card-title {
+    @apply text-pink-600;
+  }
+
+  .cancel-button {
+    @apply bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded; /* Adjusted padding for shorter width */
+    @apply mt-2; /* Adds margin-top for spacing */
+  }
+  
 }
