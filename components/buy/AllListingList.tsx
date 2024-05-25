@@ -20,20 +20,20 @@ interface AllListingListProps {
 const AllListingList: React.FC<AllListingListProps> = ({ listings }) => {
     const router = useRouter();
 
-    const [currentListings, setListings] = useState<Listing[]>(listings);
+    const [currentListings] = useState<Listing[]>(listings);
 
     const buyListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://34.142.129.98/cartlisting/cart-listings/${listingId}`, {
+            const response = await fetch(`http://34.142.129.98/cartlistings/cart-listings/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
             });
             if (response.ok) {
-                console.log('CartListing berhasil dibuat');
+                console.log('CartListing berhasil dibeli');
             } else {
-                console.error('Gagal membuat CartListing:', response.statusText);
+                console.error('CartListing gagal dibeli', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);

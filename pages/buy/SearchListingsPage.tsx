@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
+import AllListingList from "@/components/buy/AllListingList";
 
 const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
@@ -40,7 +41,7 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
                 console.log(userId)
 
                 // Memanggil endpoint API dengan userId
-                const apiUrl = `${API_BASE_URL}${userId}`;
+                const apiUrl = `${API_BASE_URL}`;
                 const response = await fetch(apiUrl);
                 const listingsData: Listing[] = await response.json();
                 setListings(listingsData);
@@ -57,7 +58,7 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
             <Header />
             <div className="flex justify-center my-8">
             </div>
-            <ListingList listings={listings} />
+            <AllListingList listings={listings} />
         </div>
     );
 };
