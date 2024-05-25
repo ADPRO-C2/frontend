@@ -67,10 +67,12 @@ const CataloguePage: React.FC<CataloguePageProps> = ({ listings: initialListings
 
 export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async () => {
   try {
-    // Tidak diperlukan karena data didapatkan secara dinamis di client side
+    const apiUrl = API_BASE_URL;
+    const response = await fetch(apiUrl);
+    const listings: Listing[] = await response.json();
     return {
       props: {
-        listings: [],
+        listings,
       },
     };
   } catch (error) {
@@ -82,6 +84,5 @@ export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async 
     };
   }
 };
-
 
 export default CataloguePage;
