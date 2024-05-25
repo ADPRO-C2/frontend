@@ -1,14 +1,8 @@
-// services/paymentService.ts
-export interface PaymentMethodRequest {
-  paymentType: string;
-  cardNumber?: string;
-  cvc?: string;
-  expiryDate?: string;
-  phoneNumber?: string;
-}
+import { PaymentMethodRequest } from "@/interfaces";
 
+// services/paymentService.ts
 export const createPaymentMethod = async (data: PaymentMethodRequest) => {
-  const response = await fetch('http://localhost:8080/payment-methods/', {
+  const response = await fetch('http://34.143.169.241/payment-methods/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -19,12 +13,12 @@ export const createPaymentMethod = async (data: PaymentMethodRequest) => {
 };
 
 export const getAllPaymentMethods = async () => {
-  const response = await fetch('http://localhost:8080/payment-methods/');
+  const response = await fetch('http://34.143.169.241/payment-methods/');
   return response.json();
 };
 
 export const deletePaymentMethod = async (id: string) => {
-  await fetch(`http://localhost:8080/payment-methods/delete/${id}`, {
+  await fetch(`http://34.143.169.241/payment-methods/delete/${id}`, {
     method: 'DELETE',
   });
 };
