@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 export interface Listing {
   listingId: string;
-  userId: string;
+  userId: number;
   name: string;
   description: string;
   photoUrl: string;
@@ -24,7 +24,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings }) => {
 
   const deleteListing = async (listingId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/delete-listing/${listingId}`, {
+      const response = await fetch(`http://34.142.129.98/api/delete-listing/${listingId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings }) => {
   return (
     <div className="listing-list">
       <div className="listing-list grid grid-cols-5 gap-4">
-        {currentListings.map(listing => (
+        {currentListings.map((listing: Listing) => (
           <div className="listing-card" key={listing.listingId}>
             <div className="max-w-sm rounded overflow-hidden shadow-lg">
               <img className="w-full" src={listing.photoUrl} alt={listing.name}/>
