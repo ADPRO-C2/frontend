@@ -2,6 +2,7 @@
 import React from 'react';
 import { TopUp } from '@/interfaces';
 import { cancelTopUp } from '@/services/topUpService';
+import '@/styles/topupPayment.css';
 
 interface TopUpListProps {
   topUps: TopUp[];
@@ -9,12 +10,14 @@ interface TopUpListProps {
 }
 
 const TopUpList: React.FC<TopUpListProps> = ({ topUps, refreshData }) => {
-  const handleCancel = async (id: string) => {
-    try {
-      await cancelTopUp(id);
-      refreshData();
-    } catch (error) {
-      console.error('Failed to cancel top-up:', error);
+  const handleCancel = async (id: string, status: string) => {
+    if (status === "PENDING") {
+      try {
+        await cancelTopUp(id);
+        refreshData();
+      } catch (error) {
+        console.error('Failed to cancel top-up:', error);
+      }
     }
   };
 
@@ -24,9 +27,10 @@ const TopUpList: React.FC<TopUpListProps> = ({ topUps, refreshData }) => {
       <ul className="list-disc pl-5">
         {topUps.map((topUp) => (
           <li key={topUp.id} className="mb-2">
-            ID: {topUp.id}, User: {topUp.userId}, Amount: {topUp.amount}, Status: {topUp.status},
-            Payment Method ID: {topUp.paymentMethodId}
-            <button className="ml-4 py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded" onClick={() => handleCancel(topUp.id)}>Cancel</button>
+            ID: {topUp.id}, Amount: {topUp.amount}, Status: {topUp.status}
+            {topUp.status === 'PENDING' && (
+              <button className="ml-4 py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded" onClick={() => handleCancel(topUp.id, topUp.status)}>Cancel</button>
+            )}
           </li>
         ))}
       </ul>
@@ -35,5 +39,3 @@ const TopUpList: React.FC<TopUpListProps> = ({ topUps, refreshData }) => {
 };
 
 export default TopUpList;
-
-
