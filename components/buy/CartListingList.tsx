@@ -27,7 +27,7 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
 
     const fetchListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://34.142.129.98/listing/${listingId}`);
+            const response = await fetch(`http://34.142.129.98/api/listing/${listingId}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch listing with ID: ${listingId}`);
             }
@@ -86,7 +86,10 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
         <div className="listing-list">
             <div className="grid grid-cols-5 gap-4">
                 {currentCart.map((item) => {
-                    const listing = listings[item.listingId];
+                    const listing = listings[item.listingId] || {
+                        name: '',
+                        photoUrl: '',
+                    };
                     return (
                         <div className="listing-card" key={item.cartListingId}>
                             {listing ? (
@@ -103,20 +106,20 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                                                 <button
                                                     className="btn btn-sm btn-outline-primary"
                                                     onClick={() => updateAmount(item.cartListingId, item.amount - 1)}
-                                                    disabled={item.amount === 0}
-                                                    style={{width: 25, height: 25}} // Adjust button dimensions
+                                                    disabled={item.amount === 1}
+                                                    style={{width: 25, height: 25}}
                                                 >
                                                     -
                                                 </button>
                                                 <input
                                                     type="number"
                                                     id={item.cartListingId}
-                                                    className="form-control text-center w-10" // Adjust input width
+                                                    className="form-control text-center w-10"
                                                     value={item.amount}
                                                     onChange={(e) => {
-                                                        const newValue = parseInt(e.target.value);
-                                                        if (!isNaN(newValue)) { // Validate input as a number
-                                                            updateAmount(item.cartListingId, newValue);
+                                                        const newAmount = parseInt(e.target.value);
+                                                        if (!isNaN(newAmount)) {
+                                                            updateAmount(item.cartListingId, newAmount);
                                                         }
                                                     }}
                                                 />
@@ -129,13 +132,26 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                                                 </button>
                                             </div>
                                         </div>
+                                        <div className="mt-2">
+                                            <div className="inline-flex items-center rounded-md shadow-sm">
+                                                <button
+                                                    className="text-slate-800 hover:text-blue-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 rounded-r-lg font-medium px-4 py-2 inline-flex space-x-1 items-center"
+                                                    onClick={() => deleteCartListing(item.cartListingId)}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
+                                                         className="w-4 h-4 mr-1">
+                                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/>
+                                                    </svg>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
                             ) : (
-                                // Display empty content or loading indicator
                                 <div className="listing-card-empty">
-                                    {/* Content to display when listing data is missing */}
                                 </div>
                             )}
                         </div>

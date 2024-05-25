@@ -6,7 +6,7 @@ import {GetServerSideProps} from "next";
 
 const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
-const API_BASE_URL = `http://34.142.129.98/cartlisting`;
+const API_BASE_URL = `http://34.142.129.98/cartlisting/user`;
 
 interface CartPageProps {
     cartListings: CartListing[],
@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
     try {
         const userId = context.params?.userId ? parseInt(context.params.userId as string, 10) : 2;
 
-        const apiUrl = `${API_BASE_URL}/user?userId=${userId}`;
+        const apiUrl = `${API_BASE_URL}/user?userId=0`;
         const response = await fetch(apiUrl);
         const cartListings: CartListing[] = await response.json();
 
