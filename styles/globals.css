@@ -1,14 +1,22 @@
+/* Assuming you have configured Tailwind with PostCSS */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.header {
-    padding-bottom: 20px;
-}
+@layer components {
+  .header {
+    @apply pb-5;
+  }
   
-.listing-list {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+  .listing-list {
+    @apply mt-5 mb-5 ml-5 mr-5;
+  }
+
+  .nav-link {
+    @apply block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700;
+  }
+
+  .active {
+    @apply text-white bg-primary-700 !important; /* Ensure this color shows when active */
+  }
 }

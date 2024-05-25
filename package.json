@@ -11,10 +11,12 @@
   "dependencies": {
     "@nextui-org/modal": "^2.0.33",
     "@nextui-org/react": "^2.3.6",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.8",
     "next": "14.2.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "@types/node": "^20",

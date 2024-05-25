@@ -8,6 +8,8 @@ import CustomModal from '@/components/CustomModal';
 import { getAllPaymentMethods } from '@/services/paymentService';
 import { getAllTopUps } from '@/services/topUpService';
 import '@/styles/topupPayment.css';
+import Header from '@/components/Header';
+
 
 const MoneyPage: React.FC = () => {
   const [isPaymentModalOpen, setPaymentModalOpen] = useState(false);
@@ -31,6 +33,8 @@ const MoneyPage: React.FC = () => {
   };
 
   return (
+    <div>
+    <Header />
     <div className="container mx-auto my-8 px-4">
       <h1 className="text-xl font-bold mb-4">Money Management</h1>
       <div className="flex justify-between mb-6">
@@ -51,6 +55,7 @@ const MoneyPage: React.FC = () => {
       <CustomModal isOpen={isTopUpModalOpen} onClose={() => setTopUpModalOpen(false)} title="Add Top-Up">
         <TopUpForm />
       </CustomModal>
+    </div>
     </div>
   );
 };

@@ -40,7 +40,7 @@ const PaymentMethodForm: React.FC = () => {
         <>
           <div className="form-group">
             <label className="form-label">Card Number:</label>
-            <input type="text" className="form-input" placeholder="1234 5678 9101 1121" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} required />
+            <input type="text" className="form-input" placeholder="1234 5678 9101 1121 (Dont Use Space)" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} required />
           </div>
           <div className="form-group">
             <label className="form-label">CVC:</label>

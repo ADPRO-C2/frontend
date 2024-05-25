@@ -19,6 +19,6 @@ export const getAllTopUps = async () => {
 
 export const cancelTopUp = async (topUpId: string) => {
   await fetch(`http://34.143.169.241/topups/${topUpId}/cancel`, {
-    method: 'POST',
+    method: 'PATCH',
   });
 };
