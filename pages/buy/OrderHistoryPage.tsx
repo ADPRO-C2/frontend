@@ -1,41 +1,39 @@
 import React, {useState} from 'react';
 import Header from '@/components/Header';
-import CartListingList, { CartListing } from '@/components/buy/CartListingList';
+import UserOrderHistory, { Order } from '@/components/buy/UserOrderHistory';
 import { useRouter } from 'next/router';
 import {GetServerSideProps} from "next";
 import {Listing} from "@/components/sell/ListingList";
 
-const LOGIN_URL = 'http://34.87.10.122/login';
-const PROFILE_URL = 'http://34.87.10.122/profile';
-const API_BASE_URL = `http://34.142.129.98/cartlisting/user/`;
+const API_BASE_URL = `http://34.142.129.98/order/user/`;
 
-interface CartPageProps {
-    cartListings: CartListing[],
+interface OrderHistoryPageProps {
+    orders: Order[],
     userId: number
 }
-const CartPage: React.FC<CartPageProps> = ({ cartListings: initialCart, userId }) => {
+const OrderHistoryPage: React.FC<OrderHistoryPageProps> = ({ orders: initialOrders, userId }) => {
     const router = useRouter();
-    const [cartListings, setCart] = useState<CartListing[]>(initialCart);
+    const [orders, setCart] = useState<Order[]>(initialOrders);
 
     return (
         <div>
             <Header />
-            <CartListingList cartListings={cartListings} userId={1}/>
+            <UserOrderHistory orders={orders} userId={1}/>
         </div>
     );
 }
 
-export const getServerSideProps: GetServerSideProps<CartPageProps> = async (context) => {
+export const getServerSideProps: GetServerSideProps<OrderHistoryPageProps> = async (context) => {
     try {
         const userId = context.params?.userId ? parseInt(context.params.userId as string, 10) : 2;
 
         const apiUrl = `${API_BASE_URL}${1}`;
         const response = await fetch(apiUrl);
-        const cartListings: CartListing[] = await response.json();
+        const orders: Order[] = await response.json();
 
         return {
             props: {
-                cartListings,
+                orders,
                 userId: userId,
             },
         };
@@ -44,11 +42,11 @@ export const getServerSideProps: GetServerSideProps<CartPageProps> = async (cont
         console.error('Error fetching data:', error);
         return {
             props: {
-                cartListings: [],
+                orders: [],
                 userId: userId,
             },
         };
     }
 };
 
-export default CartPage
+export default OrderHistoryPage

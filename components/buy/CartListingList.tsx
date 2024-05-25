@@ -82,6 +82,10 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
         }
     }
 
+    const calculateTotalPrice = () => {
+        return currentCart.reduce((total, item) => total + item.totalPrice, 0);
+    };
+
     return (
         <div className="listing-list">
             <div className="grid grid-cols-5 gap-4">
@@ -157,6 +161,16 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                         </div>
                     );
                 })}
+            </div>
+            <div className="cart-total-container">
+                <p className="text-right font-bold">Total Price: {calculateTotalPrice()}</p>
+                <button
+                    className="btn btn-primary float-right"
+                    onClick={() => router.push('insert transaction')}
+                    disabled={currentCart.length === 0}
+                >
+                    Checkout
+                </button>
             </div>
         </div>
     );
