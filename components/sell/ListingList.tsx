@@ -45,7 +45,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
   
   const fetchSortedByName = async () => {
     try {
-      const response = await fetch(`http://34.142.129.98//api/seller-listings/sorted-by-name/2`, {
+      const response = await fetch(`http://34.142.129.98/api/seller-listings/sorted-by-name/2`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
