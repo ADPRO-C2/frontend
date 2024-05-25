@@ -20,7 +20,7 @@ interface AllListingListProps {
 const AllListingList: React.FC<AllListingListProps> = ({ listings }) => {
     const router = useRouter();
 
-    const [currentListings] = useState<Listing[]>(listings);
+    const [currentListings, setListings] = useState<Listing[]>(listings);
 
     const buyListing = async (listingId: string) => {
         try {
@@ -31,9 +31,9 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings }) => {
                 },
             });
             if (response.ok) {
-                console.log('CartListing berhasil dibeli');
+                console.log('CartListing berhasil dibuat');
             } else {
-                console.error('CartListing gagal dibeli', response.statusText);
+                console.error('Gagal membuat CartListing:', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -66,7 +66,6 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings }) => {
                                         </button>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

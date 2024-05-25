@@ -15,9 +15,10 @@ export interface Listing {
 
 interface ListingListProps {
   listings: Listing[];
+  userId: number
 }
 
-const ListingList: React.FC<ListingListProps> = ({ listings }) => {
+const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
   const router = useRouter();
 
   const [currentListings, setListings] = useState<Listing[]>(listings);
@@ -40,9 +41,78 @@ const ListingList: React.FC<ListingListProps> = ({ listings }) => {
       console.error('Error:', error);
     }
   };
+
+  
+  const fetchSortedByName = async () => {
+    try {
+      const response = await fetch(`http://34.142.129.98/api/seller-listings/sorted-by-name/2`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      if (response.ok) {
+        console.log("masukk sortet")
+        const sortedListings = await response.json();
+        console.log(sortedListings);
+        setListings(sortedListings);
+        console.log(listings)
+      } else {
+        console.log("test");
+        console.error('Gagal mengambil listing:', response.statusText);
+      }
+    } catch (error) {
+      console.log("tettstststs");
+      console.error('Error:', error);
+    }
+  };
+
+  const fetchSortedByPrice = async () => {
+    try {
+      const response = await fetch(`http://34.142.129.98/api/seller-listings/sorted-by-price/2`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      if (response.ok) {
+        console.log("masukk sortet")
+        const sortedListings = await response.json();
+        console.log(sortedListings);
+        setListings(sortedListings);
+        console.log(listings)
+      } else {
+        console.log("test");
+        console.error('Gagal mengambil listing:', response.statusText);
+      }
+    } catch (error) {
+      console.log("tettstststs");
+      console.error('Error:', error);
+    }
+  };
   
   return (
     <div className="listing-list">
+      <div className="flex justify-center my-8">
+        <a href="http://localhost:3001/sell/CreateListingPage" className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+          Add New Listing
+        </a>
+      </div>
+
+      <div className="flex justify-center my-8">
+        <a href="http://localhost:3001/sell/OrdersManagementPage" className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+          Orders Management
+        </a>
+      </div>
+
+      <div className="text-center">
+        <button onClick={fetchSortedByName} className="mt-4 mr-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+          Sort by Name
+        </button>
+        <button onClick={fetchSortedByPrice} className="mt-4 ml-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+          Sort by Price
+        </button>
+      </div>
       <div className="listing-list grid grid-cols-5 gap-4">
         {currentListings.map((listing: Listing) => (
           <div className="listing-card" key={listing.listingId}>

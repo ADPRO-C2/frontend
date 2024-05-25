@@ -25,7 +25,7 @@ const CreateListingPage: React.FC = () => {
 
   const handleFormSubmit = async (newListing: NewListingData) => {
     try {
-      const response = await fetch('http://localhost:8080/api/listings', {
+      const response = await fetch('http://34.142.129.98/api/seller-listings/2', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,9 +47,10 @@ const CreateListingPage: React.FC = () => {
     <div>
       <Header />
       <div className="flex justify-center my-8">
-        {userId !== undefined && (
+        {/* {userId !== undefined && (
           <NewListingForm onSubmit={handleFormSubmit} userId={userId} />
-        )}
+        )} */}
+        <NewListingForm onSubmit={handleFormSubmit} userId={2} />
       </div>
     </div>
   );
