@@ -49,7 +49,7 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit, userId }) => 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/listing/create', {
+      const response = await fetch('http://34.142.129.98/api/listing/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

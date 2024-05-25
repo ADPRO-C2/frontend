@@ -5,7 +5,7 @@ import { GetServerSideProps } from 'next';
 
 const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
-const API_BASE_URL = 'http://localhost:8080/api/seller-listings/';
+const API_BASE_URL = 'http://34.142.129.98/api/seller-listings/';
 
 interface CataloguePageProps {
   listings: Listing[];
@@ -75,10 +75,12 @@ export const getServerSideProps: GetServerSideProps<CataloguePageProps> = async 
       },
     };
   } catch (error) {
+    const userId = context.params?.userId ? parseInt(context.params.userId as string, 10) : 2;
     console.error('Error fetching data:', error);
     return {
       props: {
         listings: [],
+        userId:userId,
       },
     };
   }
