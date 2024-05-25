@@ -12,9 +12,9 @@ const CreateListingPage: React.FC = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        // const profileResponse = await fetch(PROFILE_URL);
-        // const { userId } = await profileResponse.json();
-        setUserId(1);
+        const profileResponse = await fetch(PROFILE_URL);
+        const { userId } = await profileResponse.json();
+        setUserId(userId);
       } catch (error) {
         console.error('Error fetching user profile:', error);
       }
