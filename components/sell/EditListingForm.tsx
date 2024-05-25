@@ -8,7 +8,7 @@ interface EditListingFormProps {
 
 export interface ListingData {
     listingId: string;
-    userId: string;
+    userId: number;
     name: string;
     description: string;
     price: number;
@@ -19,7 +19,7 @@ export interface ListingData {
 
 export interface EditedListingData {
     listingId: string;
-    userId: string;
+    userId: number;
     name: string;
     description: string;
     price: number;

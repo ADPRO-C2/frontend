@@ -1,47 +1,68 @@
 // components/TopUpForm.tsx
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createTopUp } from '@/services/topUpService';
+import { getAllPaymentMethods } from '@/services/paymentService';
+import '@/styles/topupPayment.css';
 
-import { TopUpRequest } from '@/interfaces';
+const TopUpForm: React.FC = () => {
+  const [userId, setUserId] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
+  const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState<string>('');
 
-interface TopUpFormProps {
-  onClose: () => void;
-  onCreated: () => void;
-}
+  useEffect(() => {
+    const fetchPaymentMethods = async () => {
+      try {
+        const methods = await getAllPaymentMethods();
+        setPaymentMethods(methods);
+      } catch (error) {
+        console.error('Failed to fetch payment methods:', error);
+      }
+    };
 
-const TopUpForm = ({ onClose, onCreated }: TopUpFormProps) => {
-  const [formData, setFormData] = useState<TopUpRequest>({
-    userId: '',
-    amount: 0, // Ensure this is a number to match your interface
-    paymentMethodId: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: name === 'amount' ? parseFloat(value) : value });
-  };
+    fetchPaymentMethods();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const data = { userId, amount, paymentMethodId: selectedPaymentMethodId };
     try {
-      await createTopUp(formData);
-      onCreated();
-      onClose();
+      await createTopUp(data);
+      alert('Top-up successful!');
     } catch (error) {
       console.error('Failed to create top-up:', error);
+      alert('Failed to create top-up.');
     }
   };
 
   return (
-    <div>
-      <h2>Top-Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="userId" placeholder="User ID" onChange={handleChange} value={formData.userId} />
-        <input type="number" name="amount" placeholder="Amount" onChange={handleChange} value={formData.amount.toString()} />
-        <input type="text" name="paymentMethodId" placeholder="Payment Method ID" onChange={handleChange} value={formData.paymentMethodId} />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="form-label">User ID:</label>
+        <input type="text" className="form-input" placeholder="Enter user ID" value={userId} onChange={(e) => setUserId(e.target.value)} required />
+      </div>
+      <div>
+        <label className="form-label">Amount:</label>
+        <input type="number" className="form-input" placeholder="Enter amount, e.g., 100000" value={amount} onChange={(e) => setAmount(parseFloat(e.target.value))} required />
+      </div>
+      <div>
+        <label className="form-label">Payment Method:</label>
+        <select 
+          className="form-input" 
+          value={selectedPaymentMethodId} 
+          onChange={(e) => setSelectedPaymentMethodId(e.target.value)}
+          required
+        >
+          <option value="">Select Payment Method</option>
+          {paymentMethods.map(method => (
+            <option key={method.paymentId} value={method.paymentId}>
+              {method.paymentType} - {method.paymentDetails?.cardNumber || method.paymentDetails?.phoneNumber}
+            </option>
+          ))}
+        </select>
+      </div>
+      <button type="submit" className="form-button">Submit Top-Up</button>
+    </form>
   );
 };
 

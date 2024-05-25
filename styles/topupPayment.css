@@ -1,0 +1,47 @@
+/* styles/global.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .button-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out;
+  }
+  .button-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out;
+  }
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+    backdrop-filter: blur(5px);
+  }
+  .modal-container {
+    @apply bg-gray-50 rounded-lg p-6 w-full max-w-2xl shadow-lg z-50;
+  }
+  .modal-header {
+    @apply flex justify-between items-center mb-4;
+  }
+  .modal-close-btn {
+    @apply text-lg font-semibold cursor-pointer;
+  }
+  .modal-body {
+    @apply overflow-auto;
+  }
+  .card {
+    @apply bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200 ease-in-out;
+  }
+  .form-input {
+    @apply border border-gray-300 rounded p-2 w-full focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none;
+  }
+  .form-select {
+    @apply border border-gray-300 rounded p-2 w-full focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none;
+  }
+  .form-label {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+  }
+  .form-button {
+    @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+}
