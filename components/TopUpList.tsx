@@ -1,32 +1,32 @@
 // components/TopUpList.tsx
-import { useEffect, useState } from 'react';
-import { getAllTopUps, cancelTopUp } from '@/services/topUpService';
+import React from 'react';
 import { TopUp } from '@/interfaces';
-const TopUpList = () => {
-  const [topUps, setTopUps] = useState<TopUp[]>([]);
+import { cancelTopUp } from '@/services/topUpService';
 
-  const fetchTopUps = async () => {
-    const response = await getAllTopUps();
-    setTopUps(response.data);
-  };
+interface TopUpListProps {
+  topUps: TopUp[];
+  refreshData: () => void;
+}
 
-  useEffect(() => {
-    fetchTopUps();
-  }, []);
-
+const TopUpList: React.FC<TopUpListProps> = ({ topUps, refreshData }) => {
   const handleCancel = async (id: string) => {
-    await cancelTopUp(id);
-    fetchTopUps();
+    try {
+      await cancelTopUp(id);
+      refreshData();
+    } catch (error) {
+      console.error('Failed to cancel top-up:', error);
+    }
   };
 
   return (
     <div>
-      <h2>Top-Ups</h2>
-      <ul>
+      <h2 className="text-lg font-semibold mb-4">Top-Ups</h2>
+      <ul className="list-disc pl-5">
         {topUps.map((topUp) => (
-          <li key={topUp.id}>
-            {topUp.amount} - {topUp.status}
-            <button onClick={() => handleCancel(topUp.id)}>Cancel</button>
+          <li key={topUp.id} className="mb-2">
+            ID: {topUp.id}, User: {topUp.userId}, Amount: {topUp.amount}, Status: {topUp.status},
+            Payment Method ID: {topUp.paymentMethodId}
+            <button className="ml-4 py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded" onClick={() => handleCancel(topUp.id)}>Cancel</button>
           </li>
         ))}
       </ul>
@@ -35,3 +35,5 @@ const TopUpList = () => {
 };
 
 export default TopUpList;
+
+

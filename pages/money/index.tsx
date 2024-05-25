@@ -1,47 +1,72 @@
 // pages/money/index.tsx
-import React, { useState } from 'react';
-import TopUpList from '@/components/TopUpList';
+import React, { useState, useEffect } from 'react';
 import PaymentMethodList from '@/components/PaymentMethodList';
-import TopUpForm from '@/components/TopUpForm';
 import PaymentMethodForm from '@/components/PaymentMethodForm';
-import Modal from '@/components/modal';
+import TopUpForm from '@/components/TopUpForm';
+import TopUpList from '@/components/TopUpList';
+import { Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure } from '@nextui-org/react';
+import { getAllPaymentMethods } from '@/services/paymentService';
+import { getAllTopUps } from '@/services/topUpService';
 
 const MoneyPage: React.FC = () => {
-  const [isTopUpModalOpen, setIsTopUpModalOpen] = useState(false);
-  const [isPaymentMethodModalOpen, setIsPaymentMethodModalOpen] = useState(false);
+  const paymentModal = useDisclosure();
+  const topUpModal = useDisclosure();
+  const [paymentMethods, setPaymentMethods] = useState([]);
+  const [topUps, setTopUps] = useState([]);
 
-  const handleTopUpModalOpen = () => setIsTopUpModalOpen(true);
-  const handleTopUpModalClose = () => setIsTopUpModalOpen(false);
+  useEffect(() => {
+    fetchPaymentMethods();
+    fetchTopUps();
+  }, []);
 
-  const handlePaymentMethodModalOpen = () => setIsPaymentMethodModalOpen(true);
-  const handlePaymentMethodModalClose = () => setIsPaymentMethodModalOpen(false);
+  const fetchPaymentMethods = async () => {
+    const data = await getAllPaymentMethods();
+    setPaymentMethods(data);
+  };
 
-  const refreshData = () => {
-    // Logic to refresh data (fetch payment methods and top-ups)
+  const fetchTopUps = async () => {
+    const data = await getAllTopUps();
+    setTopUps(data);
   };
 
   return (
-    <div>
-
-      <div className="container mx-auto my-8">
-        <button onClick={handleTopUpModalOpen}>Add Top-Up</button>
-        <button onClick={handlePaymentMethodModalOpen}>Add Payment Method</button>
-
-        <TopUpList />
-        <PaymentMethodList />
-
-        {isTopUpModalOpen && (
-          <Modal onClose={handleTopUpModalClose}>
-            <TopUpForm onClose={handleTopUpModalClose} onCreated={refreshData} />
-          </Modal>
-        )}
-
-        {isPaymentMethodModalOpen && (
-          <Modal onClose={handlePaymentMethodModalClose}>
-            <PaymentMethodForm onClose={handlePaymentMethodModalClose} onCreated={refreshData} />
-          </Modal>
-        )}
+    <div className="container mx-auto my-8 px-4">
+      <h1 className="text-xl font-bold mb-4">Money Management</h1>
+      <div className="flex justify-between mb-6">
+        <Button onPress={topUpModal.onOpen}>Add Top-Up</Button>
+        <Button onPress={paymentModal.onOpen}>Add Payment Method</Button>
       </div>
+      <div className="flex flex-wrap gap-8">
+        <div className="flex-1 min-w-[40%]">
+          <TopUpList topUps={topUps} refreshData={fetchTopUps} />
+        </div>
+        <div className="flex-1 min-w-[40%]">
+          <PaymentMethodList paymentMethods={paymentMethods} refreshData={fetchPaymentMethods} />
+        </div>
+      </div>
+      <Modal isOpen={paymentModal.isOpen} onOpenChange={paymentModal.onOpenChange} className="bg-white rounded-lg p-4 shadow-lg max-w-md mx-auto">
+  <ModalContent>
+    <>
+      <ModalHeader>Add Payment Method</ModalHeader>
+      <ModalBody>
+        <PaymentMethodForm />
+      </ModalBody>
+      <Button color="primary" onPress={paymentModal.onClose}>Close</Button>
+    </>
+  </ModalContent>
+</Modal>
+<Modal isOpen={topUpModal.isOpen} onOpenChange={topUpModal.onOpenChange} className="bg-white rounded-lg p-4 shadow-lg max-w-md mx-auto">
+  <ModalContent>
+    <>
+      <ModalHeader>Add Top-Up</ModalHeader>
+      <ModalBody>
+        <TopUpForm />
+      </ModalBody>
+      <Button color="primary" onPress={topUpModal.onClose}>Close</Button>
+    </>
+  </ModalContent>
+</Modal>
+
     </div>
   );
 };

@@ -1,59 +1,63 @@
 // components/PaymentMethodForm.tsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createPaymentMethod } from '@/services/paymentService';
-import { PaymentMethodRequest } from '../interfaces';
 
-interface PaymentMethodFormProps {
-  onClose: () => void;
-  onCreated: () => void;
-}
-
-const PaymentMethodForm = ({ onClose, onCreated }: PaymentMethodFormProps) => {
-  const [formData, setFormData] = useState<PaymentMethodRequest>({
-    paymentType: '',
-    cardNumber: '',
-    cvc: '',
-    expiryDate: '',
-    phoneNumber: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+const PaymentMethodForm: React.FC = () => {
+  const [paymentType, setPaymentType] = useState<string>('card');
+  const [userId, setUserId] = useState<string>('');
+  const [cardNumber, setCardNumber] = useState<string>('');
+  const [cvc, setCvc] = useState<string>('');
+  const [expiryDate, setExpiryDate] = useState<string>('');
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const data = { userId, paymentType, cardNumber, cvc, expiryDate, phoneNumber };
     try {
-      await createPaymentMethod(formData);
-      onCreated();
-      onClose();
+      await createPaymentMethod(data);
+      alert('Payment method added successfully!');
     } catch (error) {
-      console.error('Failed to create payment method:', error);
+      console.error('Failed to add payment method:', error);
+      alert('Failed to add payment method.');
     }
   };
 
   return (
-    <div>
-      <h2>Add Payment Method</h2>
-      <form onSubmit={handleSubmit}>
-        <select name="paymentType" onChange={handleChange} value={formData.paymentType}>
-          <option value="">Select Type</option>
-          <option value="card">Card</option>
-          <option value="e-wallet">E-Wallet</option>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>User ID:</label>
+        <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} required />
+      </div>
+      <div>
+        <label>Payment Type:</label>
+        <select value={paymentType} onChange={(e) => setPaymentType(e.target.value)}>
+          <option value="card">Credit Card</option>
+          <option value="mobile">Mobile Payment</option>
         </select>
-        {formData.paymentType === 'card' && (
-          <>
-            <input type="text" name="cardNumber" placeholder="Card Number" onChange={handleChange} value={formData.cardNumber} />
-            <input type="text" name="cvc" placeholder="CVC" onChange={handleChange} value={formData.cvc} />
-            <input type="text" name="expiryDate" placeholder="Expiry Date" onChange={handleChange} value={formData.expiryDate} />
-          </>
-        )}
-        {formData.paymentType === 'e-wallet' && (
-          <input type="text" name="phoneNumber" placeholder="Phone Number" onChange={handleChange} value={formData.phoneNumber} />
-        )}
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+      </div>
+      {paymentType === 'card' ? (
+        <>
+          <div>
+            <label>Card Number:</label>
+            <input type="text" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} required />
+          </div>
+          <div>
+            <label>CVC:</label>
+            <input type="text" value={cvc} onChange={(e) => setCvc(e.target.value)} required />
+          </div>
+          <div>
+            <label>Expiry Date:</label>
+            <input type="date" value={expiryDate} onChange={(e) => setExpiryDate(e.target.value)} required />
+          </div>
+        </>
+      ) : (
+        <div>
+          <label>Phone Number:</label>
+          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
+        </div>
+      )}
+      <button type="submit">Add Payment Method</button>
+    </form>
   );
 };
 

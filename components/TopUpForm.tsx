@@ -1,47 +1,40 @@
 // components/TopUpForm.tsx
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { createTopUp } from '@/services/topUpService';
 
-import { TopUpRequest } from '@/interfaces';
-
-interface TopUpFormProps {
-  onClose: () => void;
-  onCreated: () => void;
-}
-
-const TopUpForm = ({ onClose, onCreated }: TopUpFormProps) => {
-  const [formData, setFormData] = useState<TopUpRequest>({
-    userId: '',
-    amount: 0, // Ensure this is a number to match your interface
-    paymentMethodId: ''
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: name === 'amount' ? parseFloat(value) : value });
-  };
+const TopUpForm: React.FC = () => {
+  const [userId, setUserId] = useState<string>('');
+  const [amount, setAmount] = useState<number>(0);
+  const [paymentMethodId, setPaymentMethodId] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const data = { userId, amount, paymentMethodId };
     try {
-      await createTopUp(formData);
-      onCreated();
-      onClose();
+      await createTopUp(data);
+      alert('Top-up successful!');
     } catch (error) {
       console.error('Failed to create top-up:', error);
+      alert('Failed to create top-up.');
     }
   };
 
   return (
-    <div>
-      <h2>Top-Up</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="userId" placeholder="User ID" onChange={handleChange} value={formData.userId} />
-        <input type="number" name="amount" placeholder="Amount" onChange={handleChange} value={formData.amount.toString()} />
-        <input type="text" name="paymentMethodId" placeholder="Payment Method ID" onChange={handleChange} value={formData.paymentMethodId} />
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>User ID:</label>
+        <input type="text" value={userId} onChange={(e) => setUserId(e.target.value)} required />
+      </div>
+      <div>
+        <label>Amount:</label>
+        <input type="number" value={amount} onChange={(e) => setAmount(parseInt(e.target.value, 10))} required />
+      </div>
+      <div>
+        <label>Payment Method ID:</label>
+        <input type="text" value={paymentMethodId} onChange={(e) => setPaymentMethodId(e.target.value)} required />
+      </div>
+      <button type="submit">Submit Top-Up</button>
+    </form>
   );
 };
 
