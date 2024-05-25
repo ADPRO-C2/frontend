@@ -11,7 +11,7 @@ const EditListingPage: React.FC = () => {
   useEffect(() => {
     const fetchListingById = async (id: string | string[]) => {
       try {
-        const response = await fetch(`http://localhost:8080/api/listing/${id}`);
+        const response = await fetch(`http://34.142.129.98/api/listing/${id}`);
         if (!response.ok) {
           throw new Error('Failed to fetch listing');
         }
@@ -31,7 +31,7 @@ const EditListingPage: React.FC = () => {
 
   const handleFormSubmit = async (editedListing: EditedListingData) => {
     try {
-      const response = await fetch('http://localhost:8080/api/listing', {
+      const response = await fetch('http://34.142.129.98/api/listing', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

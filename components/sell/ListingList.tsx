@@ -25,7 +25,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
 
   const deleteListing = async (listingId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/delete-listing/${listingId}`, {
+      const response = await fetch(`http://34.142.129.98/api/delete-listing/${listingId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
   
   const fetchSortedByName = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/seller-listings/sorted-by-name/2`, {
+      const response = await fetch(`http://34.142.129.98//api/seller-listings/sorted-by-name/2`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
 
   const fetchSortedByPrice = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/api/seller-listings/sorted-by-price/2`, {
+      const response = await fetch(`http://34.142.129.98/api/seller-listings/sorted-by-price/2`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -98,11 +98,18 @@ const ListingList: React.FC<ListingListProps> = ({ listings, userId }) => {
           Add New Listing
         </a>
       </div>
+
+      <div className="flex justify-center my-8">
+        <a href="http://localhost:3001/sell/OrdersManagementPage" className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+          Orders Management
+        </a>
+      </div>
+
       <div className="text-center">
         <button onClick={fetchSortedByName} className="mt-4 mr-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
           Sort by Name
         </button>
-        <button onClick={fetchSortedByPrice} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
+        <button onClick={fetchSortedByPrice} className="mt-4 ml-2 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700">
           Sort by Price
         </button>
       </div>
