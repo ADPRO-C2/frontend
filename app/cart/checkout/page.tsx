@@ -16,10 +16,19 @@ export default function Page() {
     const [verify] = useVerifyMutation();
 
     const fetchAllListingsSeller = async (id: number) => {
-        const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`);
-        const data = await response.json();
-        setCartListings(data); // Rename to setCartListings for clarity
+        try {
+            const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setCartListings(data);
+            console.log("hai")
+        } catch (error) {
+            console.error("Failed to fetch listings:", error);
+        }
     };
+    
 
     useEffect(() => {
         verify(undefined)
