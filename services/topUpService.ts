@@ -2,7 +2,7 @@ import { TopUpRequest } from "@/interfaces";
 
 // services/topUpService.ts
 export const createTopUp = async (data: TopUpRequest) => {
-  const response = await fetch('http://34.143.169.241/topups/', {
+  const response = await fetch('https://topupserviceadproc2.net/topups/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,12 +13,12 @@ export const createTopUp = async (data: TopUpRequest) => {
 };
 
 export const getAllTopUps = async () => {
-  const response = await fetch('http://34.143.169.241/topups/');
+  const response = await fetch('https://topupserviceadproc2.net/topups/');
   return response.json();
 };
 
 export const cancelTopUp = async (topUpId: string) => {
-  await fetch(`http://34.143.169.241/topups/${topUpId}/cancel`, {
+  await fetch(`https://topupserviceadproc2.net/topups/${topUpId}/cancel`, {
     method: 'PATCH',
   });
 };

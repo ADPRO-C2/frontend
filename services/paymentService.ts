@@ -2,7 +2,7 @@ import { PaymentMethodRequest } from "@/interfaces";
 
 // services/paymentService.ts
 export const createPaymentMethod = async (data: PaymentMethodRequest) => {
-  const response = await fetch('http://34.143.169.241/payment-methods/', {
+  const response = await fetch('https://topupserviceadproc2.net/payment-methods/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,12 +13,12 @@ export const createPaymentMethod = async (data: PaymentMethodRequest) => {
 };
 
 export const getAllPaymentMethods = async () => {
-  const response = await fetch('http://34.143.169.241/payment-methods/');
+  const response = await fetch('https://topupserviceadproc2.net/payment-methods/');
   return response.json();
 };
 
 export const deletePaymentMethod = async (id: string) => {
-  await fetch(`http://34.143.169.241/payment-methods/delete/${id}`, {
+  await fetch(`https://topupserviceadproc2.net/payment-methods/delete/${id}`, {
     method: 'DELETE',
   });
 };
