@@ -1,3 +1,5 @@
+"use client";
+
 import React, {useEffect, useState} from 'react';
 import '@/styles/globals.css';
 import { useRouter } from 'next/router';
@@ -101,7 +103,7 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId,
             </div>
 
             <div className="flex justify-center my-8">
-                <a href="/buy/OrderHistoryPage"
+                <a href="/cart/history"
                    className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
                     Checkout
                 </a>

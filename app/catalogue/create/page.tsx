@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import Header from '@/components/Header';
 import NewListingForm, { NewListingData } from '@/components/sell/NewListingForm';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';
 

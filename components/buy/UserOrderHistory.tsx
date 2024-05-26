@@ -29,7 +29,6 @@ interface UserOrderHistoryProps {
 }
 
 const UserOrderHistory: React.FC<UserOrderHistoryProps> = ({ orders , userId}) => {
-    const router = useRouter();
 
     const [currentHistory, setOrders] = useState<Order[]>(orders);
 
