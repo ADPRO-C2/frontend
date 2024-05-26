@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '@/styles/globals.css';
-import { useRouter } from 'next/router';
 
 export interface Listing {
     listingId: string;
@@ -19,8 +18,6 @@ interface AllListingListProps {
 }
 
 const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => {
-    const router = useRouter();
-
     const [currentListings, setListings] = useState<Listing[]>(listings);
 
     const buyListing = async (listingId: string) => {
@@ -32,6 +29,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
                 },
             });
             if (response.ok) {
+                console.log("test")
                 console.log('CartListing berhasil dibuat');
             } else {
                 console.error('Gagal membuat CartListing:', response.statusText);

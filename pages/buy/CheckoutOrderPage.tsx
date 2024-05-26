@@ -20,7 +20,7 @@ const CheckoutOrderPage: React.FC<CheckoutOrderPageProps> = ({ cartListings: bou
     return (
         <div>
             <Header />
-            <CheckoutButtons cartListings={cartListings} userId={1}/>
+            <CheckoutButtons cartListings={cartListings} userId={userId}/>
         </div>
     );
 }

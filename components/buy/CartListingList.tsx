@@ -20,7 +20,6 @@ interface CartListingListProps {
 }
 
 const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId}) => {
-    const router = useRouter();
 
     const [currentCart, setCart] = useState<CartListing[]>(cartListings);
     const [listings, setListings] = useState<Record<string, Listing>>({});
@@ -151,7 +150,7 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                 <p className="text-right font-bold">Total Price: {calculateTotalPrice()}</p>
                 <button
                     className="btn btn-primary float-right"
-                    onClick={() => (window.location.href = '/buy/CheckoutOrderPage')}
+                    onClick={() => (window.location.href = '/cart/checkout')}
                     disabled={currentCart.length === 0}
                 >
                     Checkout
