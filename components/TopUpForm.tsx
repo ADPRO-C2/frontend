@@ -1,12 +1,15 @@
-// components/TopUpForm.tsx
 import React, { useState, useEffect } from 'react';
 import { createTopUp } from '@/services/topUpService';
 import { getAllPaymentMethods } from '@/services/paymentService';
 import '@/styles/topupPayment.css';
 
-const TopUpForm: React.FC = () => {
+interface TopUpFormProps {
+  refreshTopUps: () => Promise<void>;
+}
+
+const TopUpForm: React.FC<TopUpFormProps> = ({ refreshTopUps }) => {
   const [userId, setUserId] = useState<string>('');
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<string>('');
   const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
   const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState<string>('');
 
@@ -23,15 +26,36 @@ const TopUpForm: React.FC = () => {
     fetchPaymentMethods();
   }, []);
 
+  const validateAmount = (input: string) => {
+    // Allow only numbers and a single dot, prevent negative and format for three decimal places
+    const validFormat = /^(\d+)?([.]?\d{0,3})?$/;
+    return validFormat.test(input);
+  };
+
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = event.target.value;
+    if (validateAmount(newValue) || newValue === "") {
+      setAmount(newValue);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const data = { userId, amount, paymentMethodId: selectedPaymentMethodId };
-    try {
-      await createTopUp(data);
-      alert('Top-up successful!');
-    } catch (error) {
-      console.error('Failed to create top-up:', error);
-      alert('Failed to create top-up.');
+    const numericAmount = parseFloat(amount);
+    if (!isNaN(numericAmount) && numericAmount > 0) {
+      const data = { userId, amount: numericAmount, paymentMethodId: selectedPaymentMethodId };
+      try {
+        const result = await createTopUp(data);
+        if (result) {
+          alert('Top-up successful!');
+          refreshTopUps();
+        }
+      } catch (error) {
+        console.error('Failed to create top-up:', error);
+        alert('Failed to create top-up.');
+      }
+    } else {
+      alert('Please enter a valid positive amount');
     }
   };
 
@@ -43,7 +67,7 @@ const TopUpForm: React.FC = () => {
       </div>
       <div>
         <label className="form-label">Amount:</label>
-        <input type="number" className="form-input" placeholder="Enter amount, e.g., 100000" value={amount} onChange={(e) => setAmount(parseFloat(e.target.value))} required />
+        <input type="text" className="form-input" placeholder="Enter amount, e.g., 100000.500" value={amount} onChange={handleAmountChange} required />
       </div>
       <div>
         <label className="form-label">Payment Method:</label>
