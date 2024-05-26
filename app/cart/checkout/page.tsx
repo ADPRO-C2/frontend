@@ -10,36 +10,39 @@ import CartListingList, { CartListing } from '@/components/buy/CartListingList';
 
 
 export default function Page() {
-    const [cartListings, setOrders] = useState<CartListing[]>();
+    const [cartListings, setCartListings] = useState<CartListing[]>();
     const [userId, setUserId] = useState<number>();
-    const [verify, isLoading] = useVerifyMutation();
-
-    //const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
+    const [balance, setBalance] = useState<number>();
+    const [verify] = useVerifyMutation();
 
     const fetchAllListingsSeller = async (id: number) => {
-      const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`)
-      const data = await response.json();
-      console.log(data);
-      setOrders(data);
-      console.log(cartListings);
-  };
+        const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`);
+        const data = await response.json();
+        setCartListings(data); // Rename to setCartListings for clarity
+    };
 
     useEffect(() => {
-      verify(undefined)
-			.unwrap()
-			.then((response) => {
-        setUserId(response.id);
-        fetchAllListingsSeller(response.id);
-			});
+        verify(undefined)
+            .unwrap()
+            .then((response) => {
+                setUserId(response.id);
+                setBalance(response.balance);
+                fetchAllListingsSeller(response.id);
+            });
+    }, [verify]); // Verify mutation should be stable, so it can be included here
 
-        //console.log(user?.id)
-        console.log("hai")
-        console.log(cartListings)
-    }, [userId]);
-  
+    // Effect to log cartListings when it updates
+    useEffect(() => {
+        console.log("Cart Listings Updated:", cartListings);
+        console.log(userId);
+        console.log(balance);
+    }, [cartListings]);
+
     return (
-      <div>
-        {cartListings && userId && <CheckoutButtons cartListings={cartListings} userId={userId}/>}
-      </div>
+        <div>
+            {cartListings && userId && balance && (
+                <CheckoutButtons cartListings={cartListings} userId={userId} balance={balance} />
+            )}
+        </div>
     );
 }
