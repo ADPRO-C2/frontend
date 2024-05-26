@@ -74,6 +74,13 @@ export default function Navbar() {
 			>
 				Profile
 			</NavLink>
+			<NavLink
+				isSelected={isSelected('/staff')}
+				isMobile={isMobile}
+				href='/staff'
+			>
+				Admin
+			</NavLink>
 			<NavLink isMobile={isMobile} onClick={handleLogout}>
 				Logout
 			</NavLink>
