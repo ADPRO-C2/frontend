@@ -48,7 +48,7 @@ export default function Page() {
 
     return (
         <div>
-            {cartListings && userId && balance && (
+            {cartListings && userId && (balance!==undefined) && (
                 <CheckoutButtons cartListings={cartListings} userId={userId} balance={balance} />
             )}
         </div>
