@@ -61,6 +61,13 @@ export default function Navbar() {
 				Money Management
 			</NavLink>
 			<NavLink
+				isSelected={isSelected('/cart/history')}
+				isMobile={isMobile}
+				href='/cart/history'
+			>
+				History Order
+			</NavLink>
+			<NavLink
 				isSelected={isSelected('/profile')}
 				isMobile={isMobile}
 				href='/profile'
