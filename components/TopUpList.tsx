@@ -1,7 +1,8 @@
 // components/TopUpList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { TopUp } from '@/interfaces';
 import { cancelTopUp } from '@/services/topUpService';
+import ConfirmationModal from './ConfirmationModal';
 import '@/styles/topupPayment.css';
 
 interface TopUpListProps {
@@ -10,30 +11,49 @@ interface TopUpListProps {
 }
 
 const TopUpList: React.FC<TopUpListProps> = ({ topUps, refreshData }) => {
-  const handleCancel = async (id: string, status: string) => {
-    if (status === "PENDING") {
-      try {
-        await cancelTopUp(id);
-        refreshData();
-      } catch (error) {
-        console.error('Failed to cancel top-up:', error);
-      }
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>('');
+
+  const handleCancelClick = (id: string) => {
+    setSelectedId(id);
+    setModalOpen(true);
+  };
+
+  const handleConfirmCancel = async () => {
+    if (selectedId) {
+      await cancelTopUp(selectedId);
+      refreshData();
     }
+    setModalOpen(false);
   };
 
   return (
     <div>
       <h2 className="text-lg font-semibold mb-4">Top-Ups</h2>
-      <ul className="list-disc pl-5">
+      <div className="card-container">
         {topUps.map((topUp) => (
-          <li key={topUp.id} className="mb-2">
-            ID: {topUp.id}, Amount: {topUp.amount}, Status: {topUp.status}
+          <div key={topUp.id} className={`card status-${topUp.status.toLowerCase()}`}>
+            <div className={`card-title ${'status-' + topUp.status.toLowerCase()}`}>{topUp.status}</div>
+            <div className="card-details">
+              Topup Id: {topUp.id}
+              <br />
+              Amount: {topUp.amount}
+            </div>
             {topUp.status === 'PENDING' && (
-              <button className="ml-4 py-1 px-2 bg-red-500 hover:bg-red-700 text-white rounded" onClick={() => handleCancel(topUp.id, topUp.status)}>Cancel</button>
+              <button className="cancel-button" onClick={() => handleCancelClick(topUp.id)}>
+                Cancel
+              </button>
             )}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
+      <ConfirmationModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onConfirm={handleConfirmCancel}
+        title="Confirm Cancellation"
+        message="Are you sure you want to cancel this top-up?"
+      />
     </div>
   );
 };
