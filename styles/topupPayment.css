@@ -90,4 +90,9 @@
     @apply mt-2; /* Adds margin-top for spacing */
   }
   
+  .balance-display {
+    @apply p-4 mb-4  ; /* Subtle background to highlight the balance */
+  }
+  .dark-blue-text {
+    color: #002244; /* Deep, dark blue color */  }
 }

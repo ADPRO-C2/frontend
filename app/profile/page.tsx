@@ -3,9 +3,15 @@
 import { useGetProfileQuery } from '@/redux/features/authApiSlice';
 import { List, Spinner } from '@/components/common';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 export default function Page() {
-	const { data: user, isLoading, isFetching } = useGetProfileQuery();
+	const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
+
+    useEffect(() => {
+        refetch();
+    }
+    , []);
 
 	const config = [
 		{

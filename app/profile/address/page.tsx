@@ -1,11 +1,6 @@
 import { AddressForm } from '@/components/forms';
-import type { Metadata } from 'next';
 import Link from 'next/link';
 
-export const metadata: Metadata = {
-	title: 'Second Treasure | Profile Address',
-	description: 'Second Treasure Profile Address page',
-};
 
 export default function Page() {
 	return (

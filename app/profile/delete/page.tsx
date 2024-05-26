@@ -5,12 +5,13 @@ import { useAppDispatch } from '@/redux/hooks';
 import { logout } from '@/redux/features/authSlice';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { Spinner } from '@/components/common';
 
 
 export default function Page() {
     const dispatch = useAppDispatch();
 
-	const [deleteAccount] = useDeleteAccountMutation();
+	const [deleteAccount, { isLoading }] = useDeleteAccountMutation();
 
     const handleDelete = () => {
 		deleteAccount(undefined)
@@ -31,7 +32,7 @@ export default function Page() {
 			</div>
 
 			<div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-                <button onClick={handleDelete} className='flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'>Delete Account</button>
+                <button disabled={isLoading} onClick={handleDelete} className='flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600'>{isLoading ? <Spinner sm /> : `Delete Account`}</button>
                 <Link className='mt-2 flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' href='/profile'>Back</Link>
 			</div>
 		</div>
