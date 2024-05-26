@@ -1,0 +1,98 @@
+/* styles/topupPayment.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .button-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out;
+  }
+  .button-secondary {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out;
+  }
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50;
+    backdrop-filter: blur(5px);
+  }
+  .modal-container {
+    @apply bg-gray-50 rounded-lg p-6 w-full max-w-2xl shadow-lg z-50;
+  }
+  .modal-header {
+    @apply flex justify-between items-center mb-4;
+  }
+  .modal-close-btn {
+    @apply text-lg font-semibold cursor-pointer;
+  }
+  .modal-body {
+    @apply overflow-auto;
+  }
+  .card {
+    @apply bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-200 ease-in-out;
+  }
+  .form-input {
+    @apply border border-gray-300 rounded p-2 w-full focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none;
+  }
+  .form-select {
+    @apply border border-gray-300 rounded p-2 w-full focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none;
+  }
+  .form-label {
+    @apply block text-gray-700 text-sm font-bold mb-2;
+  }
+  .form-button {
+    @apply bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none;
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .card-container {
+    @apply flex flex-wrap gap-4 justify-start; /* Adds gap between cards */
+  }
+
+  .card {
+    @apply relative bg-white rounded-lg shadow-md p-4 flex flex-col justify-between min-w-[280px] max-w-[calc(50%-1rem)] mb-4; /* Ensures cards are the same size with spacing */
+  }
+
+  .card-title {
+    @apply text-lg font-bold mb-2;
+  }
+
+  .card-details {
+    @apply text-base text-gray-600;
+  }
+  
+  .delete-button {
+    @apply absolute right-2 bottom-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full flex items-center justify-center w-8 h-8; /* Styling for buttons */
+  }
+
+  .delete-button {
+    @apply bg-red-400; /* Lighter red background */
+  }
+
+  .status-pending .card-title {
+    @apply text-yellow-600; /* Darker shade for better visibility if needed */
+  }
+  
+  .status-approved .card-title {
+    @apply text-green-600;
+  }
+  
+  .status-rejected .card-title {
+    @apply text-red-600;
+  }
+  
+  .status-canceled .card-title {
+    @apply text-pink-600;
+  }
+
+  .cancel-button {
+    @apply bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded; /* Adjusted padding for shorter width */
+    @apply mt-2; /* Adds margin-top for spacing */
+  }
+  
+  .balance-display {
+    @apply p-4 mb-4  ; /* Subtle background to highlight the balance */
+  }
+  .dark-blue-text {
+    color: #002244; /* Deep, dark blue color */  }
+}
