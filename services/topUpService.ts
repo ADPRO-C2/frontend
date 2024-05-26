@@ -22,3 +22,9 @@ export const cancelTopUp = async (topUpId: string) => {
     method: 'PATCH',
   });
 };
+
+export const getAllTopUpsByUserId = async (userId: number) => { 
+  const response = await fetch(`https://topupserviceadproc2.net/topups/user/${userId}`);
+  return response.json();
+};
+
