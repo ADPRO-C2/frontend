@@ -6,7 +6,7 @@ import AllListingList from "@/components/buy/AllListingList";
 
 const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
-const API_BASE_URL = 'http://34.142.129.98/api/listings'||'http://localhost:8080/api/listings';
+const API_BASE_URL = 'http://34.142.129.98/api/listings';
 
 interface SearchListingsPageProps {
     listings: Listing[];
