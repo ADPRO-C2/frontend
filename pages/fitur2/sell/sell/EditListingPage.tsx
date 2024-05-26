@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from '@/components/Header';
 import EditListingForm, { EditedListingData } from '@/components/sell/EditListingForm'; // Sesuaikan dengan path yang benar
 import { useRouter } from 'next/router';
 
@@ -21,13 +20,13 @@ const EditListingPage: React.FC = () => {
         console.error('Error fetching listing:', error);
       }
     };
-  
+
     const { id } = router.query;
     if (id) {
       fetchListingById(id);
     }
   }, [router.query]);
-  
+
 
   const handleFormSubmit = async (editedListing: EditedListingData) => {
     try {
@@ -41,20 +40,17 @@ const EditListingPage: React.FC = () => {
       if (response.ok) {
         router.push('/catalogue');
       } else {
-        setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
-        console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
+        console.error('Failed to edit listing');
       }
     } catch (error) {
-        setError('Error submitting form:')
       console.error('Error submitting form:', error);
     }
   };
 
   return (
     <div>
-      <Header />
       <div className="flex justify-center my-8">
-        {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} error={error}/>}
+      {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} error={error}/>}
       </div>
     </div>
   );

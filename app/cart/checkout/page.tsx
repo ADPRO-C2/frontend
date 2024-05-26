@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';
@@ -16,10 +15,19 @@ export default function Page() {
     const [verify] = useVerifyMutation();
 
     const fetchAllListingsSeller = async (id: number) => {
-        const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`);
-        const data = await response.json();
-        setCartListings(data); // Rename to setCartListings for clarity
+        try {
+            const response = await fetch(`http://34.142.129.98/cartlisting/user/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            setCartListings(data);
+            console.log("hai")
+        } catch (error) {
+            console.error("Failed to fetch listings:", error);
+        }
     };
+    
 
     useEffect(() => {
         verify(undefined)
@@ -40,7 +48,7 @@ export default function Page() {
 
     return (
         <div>
-            {cartListings && userId && balance && (
+            {cartListings && userId && (balance!==undefined) && (
                 <CheckoutButtons cartListings={cartListings} userId={userId} balance={balance} />
             )}
         </div>

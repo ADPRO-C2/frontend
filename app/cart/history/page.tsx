@@ -1,25 +1,25 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import ListingList, { Listing } from '@/components/sell/ListingList';
+import UserOrderHistory, { Order } from '@/components/buy/UserOrderHistory';
 import { GetServerSideProps } from 'next';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';
 import { useGetProfileQuery } from '@/redux/features/authApiSlice';
 
 
 export default function Page() {
-    const [listingsData, setListings] = useState<Listing[] >();
+    const [orders, setOrders] = useState<Order[]>();
     const [userId, setUserId] = useState<number>();
     const [verify, isLoading] = useVerifyMutation();
 
     //const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
 
     const fetchAllListingsSeller = async (id: number) => {
-      const response = await fetch(`http://34.142.129.98/api/seller-listings/${id}`)
+      const response = await fetch(`http://34.142.129.98/order/user/${id}`)
       const data = await response.json();
       console.log(data);
-      setListings(data);
-      console.log(listingsData);
+      setOrders(data);
+      console.log(orders);
   };
 
     useEffect(() => {
@@ -32,12 +32,12 @@ export default function Page() {
 
         //console.log(user?.id)
         console.log("hai")
-        console.log(listingsData)
+        console.log(orders)
     }, [userId]);
   
     return (
       <div>
-        {listingsData && userId && <ListingList listings={listingsData} userId={userId} />}
+        {orders && userId && <UserOrderHistory orders={orders} userId={userId} />}
       </div>
     );
 }
