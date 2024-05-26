@@ -19,33 +19,33 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId,
     const [userBalance, setBalance] = useState(0);
 
 
-    const fetchAllCartListings = async (userId: number) => {
-        try {
-            const response = await fetch(`http://34.142.129.98/cartlisting/user/${userId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (response.ok) {
-                console.log("test")
-                const data = await response.json();
-                setCartListings(data);
-            } else {
-                console.error('Failed to fetch cart listings:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
+    // const fetchAllCartListings = async (userId: number) => {
+    //     try {
+    //         const response = await fetch(`http://34.142.129.98/cartlisting/user/${userId}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //         });
+    //         if (response.ok) {
+    //             console.log("test")
+    //             const data = await response.json();
+    //             setCartListings(data);
+    //         } else {
+    //             console.error('Failed to fetch cart listings:', response.statusText);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    // };
 
-    useEffect(() => {
-        const fetchCartListings = async () => {
-            console.log("test")
-            await fetchAllCartListings(userId);
-        };
-        fetchCartListings();
-    }, [userId]);
+    // useEffect(() => {
+    //     const fetchCartListings = async () => {
+    //         console.log("test")
+    //         await fetchAllCartListings(userId);
+    //     };
+    //     fetchCartListings();
+    // }, [userId]);
 
     const createOrders = async (cartListings: CartListing[]) => {
         for (const cartlisting of cartListings) {
