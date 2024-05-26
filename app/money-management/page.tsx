@@ -24,13 +24,15 @@ export default function Page() {
         if (user && user.id) {
             fetchAllData(user.id);
         }
-    }, [user?.id]);
+        if (user && user.balance) {
+            setCurrentBalance(user.balance); // Setting balance directly from user profile data
+        }
+    }, [user?.id, user?.balance]);
 
     const fetchAllData = async (userId: number) => {
         await Promise.all([
             fetchPaymentMethods(userId),
-            fetchTopUps(userId),
-            fetchBalance() // Assuming a fetchBalance function exists
+            fetchTopUps(userId)
         ]);
     };
 
@@ -42,11 +44,6 @@ export default function Page() {
     const fetchTopUps = async (userId: number) => {
         const topUps = await getAllTopUpsByUserId(userId);
         setTopUps(topUps);
-    };
-
-    const fetchBalance = async () => {
-        // Implement the actual API call to fetch balance
-        setCurrentBalance(5000); // Placeholder value
     };
 
     return (

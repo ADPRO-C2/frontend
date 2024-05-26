@@ -54,6 +54,13 @@ export default function Navbar() {
 				My Cart
 			</NavLink>
 			<NavLink
+				isSelected={isSelected('/money-management')}
+				isMobile={isMobile}
+				href='/money-management'
+			>
+				Money Management
+			</NavLink>
+			<NavLink
 				isSelected={isSelected('/profile')}
 				isMobile={isMobile}
 				href='/profile'
