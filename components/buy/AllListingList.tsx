@@ -15,16 +15,17 @@ export interface Listing {
 
 interface AllListingListProps {
     listings: Listing[];
+    userId: number;
 }
 
-const AllListingList: React.FC<AllListingListProps> = ({ listings }) => {
+const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => {
     const router = useRouter();
 
     const [currentListings, setListings] = useState<Listing[]>(listings);
 
     const buyListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://34.142.129.98/cartlistings/cart-listings/${listingId}`, {
+            const response = await fetch(`http://34.142.129.98/cartlistings/cart-listings/${listingId}?amount=1&userId=${userId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

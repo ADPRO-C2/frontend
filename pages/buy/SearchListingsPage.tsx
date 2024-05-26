@@ -18,7 +18,6 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                // Mendapatkan token JWT palsu dengan login palsu
                 const loginResponse = await fetch(LOGIN_URL, {
                     method: 'POST',
                     headers: {
@@ -32,7 +31,7 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
 
                 const profileResponse = await fetch(PROFILE_URL, {
                     method: 'GET',
-                    credentials: 'include', // Sertakan cookie dalam permintaan
+                    credentials: 'include',
                 });
 
                 const profileData = await profileResponse.json();
@@ -40,7 +39,6 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
 
                 console.log(userId)
 
-                // Memanggil endpoint API dengan userId
                 const apiUrl = `${API_BASE_URL}`;
                 const response = await fetch(apiUrl);
                 const listingsData: Listing[] = await response.json();
@@ -58,7 +56,7 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
             <Header />
             <div className="flex justify-center my-8">
             </div>
-            <AllListingList listings={listings} />
+            <AllListingList listings={listings} userId={1} />
         </div>
     );
 };
