@@ -7,21 +7,15 @@ import { CartListing } from '@/components/buy/CartListingList';
 interface CheckoutButtonsProps {
     cartListings: CartListing[];
     userId: number;
+    balance: number;
 }
 
-const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId }) => {
-    const router = useRouter();
+const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId, balance }) => {
 
     const [boughtCartListings, setCartListings] = useState<CartListing[]>(cartListings);
     const [totalCost, setTotalCost] = useState(0);
     const [userBalance, setBalance] = useState(0);
 
-    useEffect(() => {
-        const fetchCartListings = async () => {
-            await fetchAllCartListings(userId);
-        };
-        fetchCartListings();
-    }, [userId]);
 
     const fetchAllCartListings = async (userId: number) => {
         try {
@@ -32,6 +26,7 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId 
                 },
             });
             if (response.ok) {
+                console.log("test")
                 const data = await response.json();
                 setCartListings(data);
             } else {
@@ -41,6 +36,14 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId 
             console.error('Error:', error);
         }
     };
+
+    useEffect(() => {
+        const fetchCartListings = async () => {
+            console.log("test")
+            await fetchAllCartListings(userId);
+        };
+        fetchCartListings();
+    }, [userId]);
 
     const createOrders = async (cartListings: CartListing[]) => {
         for (const cartlisting of cartListings) {
@@ -73,13 +76,14 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId 
     };
 
     useEffect(() => {
+        console.log("testt")
         setTotalCost(findTotalCost(boughtCartListings)); // Update totalCost on cartListings change
     }, [boughtCartListings]);
 
-    const getBalance = async () => {
-        console.log("Fetching user balance (placeholder)");
-        return 0; // Replace with actual balance or null if not available
-    };
+    // const getBalance = async () => {
+    //     console.log("Fetching user balance (placeholder)");
+    //     return 0; // Replace with actual balance or null if not available
+    // };
 
     return (
         <div className="listing-list">
@@ -87,10 +91,10 @@ const CheckoutButtons: React.FC<CheckoutButtonsProps> = ({ cartListings, userId 
                 <span className="text-lg font-bold">Total Cost: IDR {totalCost}</span>
             </div>
             <div className="flex justify-center my-4">
-                <span className="text-lg font-bold">Your Balance: IDR {userBalance}</span>
+                <span className="text-lg font-bold">Your Balance: IDR {balance}</span>
             </div>
             <div className="flex justify-center my-8">
-                <a href="/buy/CartPage"
+                <a href="/cart"
                    className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
                     Return to Cart
                 </a>
