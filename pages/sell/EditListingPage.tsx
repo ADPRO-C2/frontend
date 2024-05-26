@@ -39,7 +39,7 @@ const EditListingPage: React.FC = () => {
         body: JSON.stringify(editedListing),
       });
       if (response.ok) {
-        router.push('/sell/CataloguePage');
+        router.push('/catalogue');
       } else {
         setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
         console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
