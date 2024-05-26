@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 import AllListingList from "@/components/buy/AllListingList";
@@ -53,7 +52,6 @@ const SearchListingsPage: React.FC<SearchListingsPageProps> = ({ listings: allLi
 
     return (
         <div>
-            <Header />
             <div className="flex justify-center my-8">
             </div>
             <AllListingList listings={listings} userId={1} />

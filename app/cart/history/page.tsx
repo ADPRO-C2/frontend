@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Header from '@/components/Header';
 import UserOrderHistory, { Order } from '@/components/buy/UserOrderHistory';
 import { GetServerSideProps } from 'next';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';

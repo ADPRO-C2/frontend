@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Header from '@/components/Header';
 import UserOrderHistory, { Order } from '@/components/buy/UserOrderHistory';
 import { useRouter } from 'next/router';
 import {GetServerSideProps} from "next";
@@ -17,7 +16,6 @@ const OrderHistoryPage: React.FC<OrderHistoryPageProps> = ({ orders: initialOrde
 
     return (
         <div>
-            <Header />
             <UserOrderHistory orders={orders} userId={1}/>
         </div>
     );

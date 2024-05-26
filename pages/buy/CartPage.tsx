@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import Header from '@/components/Header';
 import CartListingList, { CartListing } from '@/components/buy/CartListingList';
 import { useRouter } from 'next/router';
 import {GetServerSideProps} from "next";
@@ -18,7 +17,6 @@ const CartPage: React.FC<CartPageProps> = ({ cartListings: initialCart, userId }
 
     return (
         <div>
-            <Header />
             <CartListingList cartListings={cartListings} userId={1}/>
         </div>
     );
