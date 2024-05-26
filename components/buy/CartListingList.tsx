@@ -151,7 +151,7 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                 <p className="text-right font-bold">Total Price: {calculateTotalPrice()}</p>
                 <button
                     className="btn btn-primary float-right"
-                    onClick={() => (window.location.href = 'http://localhost:3000/buy/CheckoutOrderPage')}
+                    onClick={() => (window.location.href = '/buy/CheckoutOrderPage')}
                     disabled={currentCart.length === 0}
                 >
                     Checkout
