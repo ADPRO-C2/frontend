@@ -82,6 +82,24 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
         }
     }
 
+    const handleChange = (cartListingId: string, event: React.ChangeEvent<HTMLInputElement>) => {
+        const newAmount = Math.max(1, parseInt(event.target.value));
+        if (!isNaN(newAmount)) {
+            updateAmount(cartListingId, newAmount)
+                .then(() => {
+                    setCart(prevCart =>
+                        prevCart.map(item =>
+                            item.cartListingId === cartListingId ? { ...item, amount: newAmount } : item
+                        )
+                    );
+                })
+                .catch(error => {
+                    console.error('Error updating amount:', error);
+                });
+        }
+    };
+
+
     const calculateTotalPrice = () => {
         return currentCart.reduce((total, item) => total + item.totalPrice, 0);
     };
@@ -112,12 +130,7 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                                                     id={item.cartListingId}
                                                     className="form-control text-center w-10"
                                                     value={item.amount}
-                                                    onChange={(e) => {
-                                                        const newAmount = parseInt(e.target.value);
-                                                        if (!isNaN(newAmount)) {
-                                                            updateAmount(item.cartListingId, newAmount);
-                                                        }
-                                                    }}
+                                                    onChange={(e) => handleChange(item.cartListingId, e)}
                                                 />
                                             </div>
                                         </div>
