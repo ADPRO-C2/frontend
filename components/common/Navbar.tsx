@@ -7,6 +7,7 @@ import { useAppSelector, useAppDispatch } from '@/redux/hooks';
 import { useLogoutMutation } from '@/redux/features/authApiSlice';
 import { logout as setLogout } from '@/redux/features/authSlice';
 import { NavLink } from '@/components/common';
+import { toast } from 'react-toastify';
 
 export default function Navbar() {
 	const pathname = usePathname();
@@ -20,7 +21,10 @@ export default function Navbar() {
 		logout(undefined)
 			.unwrap()
 			.then(() => {
+				toast.success('Logged out');
 				dispatch(setLogout());
+			}).catch(() => {
+				toast.error('Failed to log out');
 			});
 	};
 
