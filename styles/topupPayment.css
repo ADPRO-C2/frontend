@@ -50,7 +50,7 @@
   }
 
   .card {
-    @apply relative bg-white rounded-lg shadow-md p-4 flex flex-col justify-between min-w-[280px] max-w-[calc(50%-1rem)] mb-4; /* Ensures cards are the same size with spacing */
+    @apply relative bg-white rounded-lg shadow-md p-4 flex flex-col justify-between min-w-[260px] max-w-[calc(50%-1rem)] mb-4; /* Ensures cards are the same size with spacing */
   }
 
   .card-title {
@@ -95,4 +95,6 @@
   }
   .dark-blue-text {
     color: #002244; /* Deep, dark blue color */  }
+
+    
 }

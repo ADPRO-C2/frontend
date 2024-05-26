@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { createTopUp } from '@/services/topUpService';
-import { getAllPaymentMethods } from '@/services/paymentService';
+import { getAllPaymentMethodsByUserId } from '@/services/paymentService';
 import '@/styles/topupPayment.css';
 
 interface TopUpFormProps {
+  user: { id: number }; // Assuming this is passed correctly from the parent component
   refreshTopUps: () => Promise<void>;
 }
 
-const TopUpForm: React.FC<TopUpFormProps> = ({ refreshTopUps }) => {
-  const [userId, setUserId] = useState<string>('');
+const TopUpForm: React.FC<TopUpFormProps> = ({ user, refreshTopUps }) => {
   const [amount, setAmount] = useState<string>('');
   const [paymentMethods, setPaymentMethods] = useState<any[]>([]);
   const [selectedPaymentMethodId, setSelectedPaymentMethodId] = useState<string>('');
@@ -16,21 +16,17 @@ const TopUpForm: React.FC<TopUpFormProps> = ({ refreshTopUps }) => {
   useEffect(() => {
     const fetchPaymentMethods = async () => {
       try {
-        const methods = await getAllPaymentMethods();
+        const methods = await getAllPaymentMethodsByUserId(user.id);
         setPaymentMethods(methods);
       } catch (error) {
         console.error('Failed to fetch payment methods:', error);
       }
     };
 
-    fetchPaymentMethods();
-  }, []);
+    if (user.id) fetchPaymentMethods();
+  }, [user.id]);
 
-  const validateAmount = (input: string) => {
-    // Allow only numbers and a single dot, prevent negative and format for three decimal places
-    const validFormat = /^(\d+)?([.]?\d{0,3})?$/;
-    return validFormat.test(input);
-  };
+  const validateAmount = (input: string) => /^(\d+)?([.]?\d{0,3})?$/.test(input);
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -43,7 +39,7 @@ const TopUpForm: React.FC<TopUpFormProps> = ({ refreshTopUps }) => {
     e.preventDefault();
     const numericAmount = parseFloat(amount);
     if (!isNaN(numericAmount) && numericAmount > 0) {
-      const data = { userId, amount: numericAmount, paymentMethodId: selectedPaymentMethodId };
+      const data = { userId: user.id, amount: numericAmount, paymentMethodId: selectedPaymentMethodId };
       try {
         const result = await createTopUp(data);
         if (result) {
@@ -62,23 +58,14 @@ const TopUpForm: React.FC<TopUpFormProps> = ({ refreshTopUps }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="form-label">User ID:</label>
-        <input type="text" className="form-input" placeholder="Enter user ID" value={userId} onChange={(e) => setUserId(e.target.value)} required />
-      </div>
-      <div>
         <label className="form-label">Amount:</label>
         <input type="text" className="form-input" placeholder="Enter amount, e.g., 100000.500" value={amount} onChange={handleAmountChange} required />
       </div>
       <div>
         <label className="form-label">Payment Method:</label>
-        <select 
-          className="form-input" 
-          value={selectedPaymentMethodId} 
-          onChange={(e) => setSelectedPaymentMethodId(e.target.value)}
-          required
-        >
+        <select className="form-input" value={selectedPaymentMethodId} onChange={(e) => setSelectedPaymentMethodId(e.target.value)} required>
           <option value="">Select Payment Method</option>
-          {paymentMethods.map(method => (
+          {paymentMethods.map((method) => (
             <option key={method.paymentId} value={method.paymentId}>
               {method.paymentType} - {method.paymentDetails?.cardNumber || method.paymentDetails?.phoneNumber}
             </option>

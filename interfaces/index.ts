@@ -1,7 +1,7 @@
 // interfaces/index.ts
 export interface TopUp {
     id: string;
-    userId: string;
+    userId: number;
     amount: number;
     status: string;
     paymentMethodId: string;
@@ -9,7 +9,7 @@ export interface TopUp {
 
 export interface PaymentMethod {
     paymentId: string;
-    userId: string;
+    userId: number;
     paymentType: string;
     paymentDetails: {
         cardNumber?: string;
@@ -20,13 +20,13 @@ export interface PaymentMethod {
 }
 
 export interface TopUpRequest {
-    userId: string;
+    userId: number;
     amount: number;
     paymentMethodId: string;
 }
 
 export interface PaymentMethodRequest {
-    userId: string;
+    userId: number;
     paymentType: string;
     cardNumber?: string;
     cvc?: string;

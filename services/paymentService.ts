@@ -22,3 +22,8 @@ export const deletePaymentMethod = async (id: string) => {
     method: 'DELETE',
   });
 };
+
+export const getAllPaymentMethodsByUserId = async (userId: number) => {
+  const response = await fetch(`https://topupserviceadproc2.net/payment-methods/user/${userId}`);
+  return response.json();
+}

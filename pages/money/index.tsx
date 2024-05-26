@@ -68,12 +68,12 @@ const MoneyPage: React.FC = () => {
             <PaymentMethodList paymentMethods={paymentMethods} refreshData={refreshPaymentMethods} />
           </div>
         </div>
-        <CustomModal isOpen={isPaymentModalOpen} onClose={() => setPaymentModalOpen(false)} title="Add Payment Method">
+        {/* <CustomModal isOpen={isPaymentModalOpen} onClose={() => setPaymentModalOpen(false)} title="Add Payment Method">
         <PaymentMethodForm refreshPaymentMethods={refreshPaymentMethods} />        
         </CustomModal>
         <CustomModal isOpen={isTopUpModalOpen} onClose={() => setTopUpModalOpen(false)} title="Add Top-Up">
           <TopUpForm refreshTopUps={refreshTopUps} />
-        </CustomModal>
+        </CustomModal> */}
       </div>
     </div>
   );
