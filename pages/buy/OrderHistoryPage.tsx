@@ -8,8 +8,8 @@ import {Listing} from "@/components/sell/ListingList";
 const API_BASE_URL = `http://34.142.129.98/order/user/`;
 
 interface OrderHistoryPageProps {
-    orders: Order[],
-    userId: number
+    orders: Order[];
+    userId: number;
 }
 const OrderHistoryPage: React.FC<OrderHistoryPageProps> = ({ orders: initialOrders, userId }) => {
     const router = useRouter();

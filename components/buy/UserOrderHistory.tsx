@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '@/styles/globals.css';
 import { useRouter } from 'next/router';
-import AllListingList, { Listing } from "@/components/buy/AllListingList";
 
 const LOGIN_URL = 'http://34.87.10.122/login';
 const PROFILE_URL = 'http://34.87.10.122/profile';
@@ -44,10 +43,9 @@ const UserOrderHistory: React.FC<UserOrderHistoryProps> = ({ orders , userId}) =
                             <div className="px-6 py-4">
                                 <div className="font-bold text-xl mb-2">{order.listingName}</div>
                                 <div className="listing-details">
-                                    <p>{order.status}</p>
                                     <p>Total Price: IDR {order.totalPrice}</p>
-                                    <p>Id Pembeli: {order.userId}</p>
                                     <p>Date Bought: {order.dateBought.toString()}</p>
+                                    <p>Status: {order.status}</p>
                                 </div>
                             </div>
                         </div>

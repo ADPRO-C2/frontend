@@ -107,14 +107,6 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                                         <div className="amount-input">
                                             <label htmlFor={item.cartListingId}>Amount:</label>
                                             <div className="inline-flex">
-                                                <button
-                                                    className="btn btn-sm btn-outline-primary"
-                                                    onClick={() => updateAmount(item.cartListingId, item.amount - 1)}
-                                                    disabled={item.amount === 1}
-                                                    style={{width: 25, height: 25}}
-                                                >
-                                                    -
-                                                </button>
                                                 <input
                                                     type="number"
                                                     id={item.cartListingId}
@@ -127,13 +119,6 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                                                         }
                                                     }}
                                                 />
-                                                <button
-                                                    className="btn btn-sm btn-outline-primary"
-                                                    onClick={() => updateAmount(item.cartListingId, item.amount + 1)}
-                                                    style={{width: 25, height: 25}}
-                                                >
-                                                    +
-                                                </button>
                                             </div>
                                         </div>
                                         <div className="mt-2">
@@ -166,7 +151,7 @@ const CartListingList: React.FC<CartListingListProps> = ({ cartListings , userId
                 <p className="text-right font-bold">Total Price: {calculateTotalPrice()}</p>
                 <button
                     className="btn btn-primary float-right"
-                    onClick={() => router.push('insert transaction')}
+                    onClick={() => (window.location.href = 'http://localhost:3000/buy/CheckoutOrderPage')}
                     disabled={currentCart.length === 0}
                 >
                     Checkout
