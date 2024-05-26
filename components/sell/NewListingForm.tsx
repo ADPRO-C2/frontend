@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 interface NewListingFormProps {
   onSubmit: (newListing: NewListingData) => void;
@@ -18,7 +17,6 @@ export interface NewListingData {
 }
 
 const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit, userId }) => {
-  const router = useRouter(); // Gunakan useRouter untuk mendapatkan objek router
   const [error, setError] = useState<string>('');
   
   const [formData, setFormData] = useState<NewListingData>({
@@ -57,7 +55,7 @@ const NewListingForm: React.FC<NewListingFormProps> = ({ onSubmit, userId }) => 
         body: JSON.stringify(formData),
       });
       if (response.ok) {
-        router.push('/catalogue');
+        window.location.href = '/catalogue';
       } else {
         setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
         console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');

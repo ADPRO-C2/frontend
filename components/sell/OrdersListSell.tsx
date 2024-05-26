@@ -18,7 +18,7 @@ interface OrdersListSellProps {
   orders: Order[];
 }
 
-const OrdersListSell: React.FC<OrdersListSellProps> = ({ orders: initialOrders }) => {
+const OrdersListSell: React.FC<OrdersListSellProps> = ({ orders: initialOrders}) => {
   const [orders, setOrders] = useState<Order[]>(initialOrders);
 
   const handleStatusChange = async (orderId: string, newStatus: string) => {
