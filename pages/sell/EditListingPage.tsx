@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import EditListingForm, { EditedListingData } from '@/components/sell/EditListingForm'; // Sesuaikan dengan path yang benar
 import { useRouter } from 'next/router';
+import '@/styles/globals.css';
 
 const EditListingPage: React.FC = () => {
   const router = useRouter();
@@ -40,9 +41,11 @@ const EditListingPage: React.FC = () => {
       if (response.ok) {
         router.push('/catalogue');
       } else {
-        console.error('Failed to edit listing');
+        setError('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
+        console.error('Price or stock must be non-negative atau rate condition harus berada di antara 0,1,2,3');
       }
     } catch (error) {
+        setError('Error submitting form:')
       console.error('Error submitting form:', error);
     }
   };
@@ -50,7 +53,7 @@ const EditListingPage: React.FC = () => {
   return (
     <div>
       <div className="flex justify-center my-8">
-      {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} error={error}/>}
+        {listing && <EditListingForm listing={listing} onSubmit={handleFormSubmit} error={error}/>}
       </div>
     </div>
   );
