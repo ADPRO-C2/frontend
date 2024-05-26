@@ -1,11 +1,5 @@
 import Link from 'next/link';
 import { LoginForm } from '@/components/forms';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-	title: 'Second Treasure | Login',
-	description: 'Second Treasure login page',
-};
 
 export default function Page() {
 	return (
