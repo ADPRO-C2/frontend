@@ -5,7 +5,7 @@ import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';
 import { useGetProfileQuery } from '@/redux/features/authApiSlice';
-import AllListingList from "@/components/buy/AllListingList";
+import AllListingList from "@/components/staff/AllListingList";
 
 
 export default function Page() {
@@ -16,7 +16,7 @@ export default function Page() {
     //const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
 
     const fetchAllListingsSeller = async () => {
-      const response = await fetch('http://34.142.129.98/api/listings')
+      const response = await fetch('http://35.213.172.32/staff/reported-listing')
       const data = await response.json();
       console.log(data);
       setListings(data);

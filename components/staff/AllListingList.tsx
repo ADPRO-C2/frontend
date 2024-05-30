@@ -22,7 +22,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
 
     const ignoreListing = async (listingId: string) => {
         try {
-            const response = await fetch(``, {
+            const response = await fetch(`http://35.213.172.32/reported-listing/ignore/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -30,9 +30,9 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
             });
             if (response.ok) {
                 console.log("test")
-                console.log('CartListing berhasil dibuat');
+                console.log('ReportedListing berhasil diignore');
             } else {
-                console.error('Gagal membuat CartListing:', response.statusText);
+                console.error('Gagal ignore ReportedListing: ', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -41,7 +41,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
 
     const removeListing = async (listingId: string) => {
         try {
-            const response = await fetch(``, {
+            const response = await fetch(`http://35.213.172.32/reported-listing/remove/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,9 +49,9 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
             });
             if (response.ok) {
                 console.log("test")
-                console.log('CartListing berhasil dibuat');
+                console.log('ReportedListing berhasil diremove');
             } else {
-                console.error('Gagal membuat CartListing:', response.statusText);
+                console.error('Gagal ignore ReportedListing: ', response.statusText);
             }
         } catch (error) {
             console.error('Error:', error);
