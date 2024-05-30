@@ -7,7 +7,6 @@ import { useVerifyMutation } from '@/redux/features/authApiSlice';
 import { useGetProfileQuery } from '@/redux/features/authApiSlice';
 import AllListingList from "@/components/staff/AllListingList";
 
-
 export default function Page() {
     const [listingsData, setListings] = useState<Listing[] >();
     const [userId, setUserId] = useState<number>();
@@ -21,24 +20,24 @@ export default function Page() {
       console.log(data);
       setListings(data);
       console.log(listingsData);
-  };
+    };
 
     useEffect(() => {
       verify(undefined)
-			.unwrap()
-			.then((response) => {
-        setUserId(response.id);
-        fetchAllListingsSeller();
-			});
+          .unwrap()
+          .then((response) => {
+            setUserId(response.id);
+            fetchAllListingsSeller();
+          });
 
-        //console.log(user?.id)
-        console.log("hai")
-        console.log(userId)
+      //console.log(user?.id)
+      console.log("hai")
+      console.log(userId)
     }, [userId]);
-  
+
     return (
-      <div>
-        {listingsData && userId && <AllListingList listings={listingsData} userId={userId} />}
-      </div>
+        <div>
+          {listingsData && userId && <AllListingList listings={listingsData} userId={userId} />}
+        </div>
     );
-}
+  }
