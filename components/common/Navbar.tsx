@@ -79,7 +79,7 @@ export default function Navbar() {
 				isMobile={isMobile}
 				href='/staff'
 			>
-				Admin
+				Staff
 			</NavLink>
 			<NavLink isMobile={isMobile} onClick={handleLogout}>
 				Logout
