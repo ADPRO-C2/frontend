@@ -1,44 +1,22 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import ListingList, { Listing } from '@/components/staff/ListingList';
-import { GetServerSideProps } from 'next';
-import { useVerifyMutation } from '@/redux/features/authApiSlice';
-import { useGetProfileQuery } from '@/redux/features/authApiSlice';
-import AllListingList from "@/components/staff/AllListingList";
 
 
 export default function Page() {
-    const [listingsData, setListings] = useState<Listing[] >();
-    const [userId, setUserId] = useState<number>();
-    const [verify, isLoading] = useVerifyMutation();
-
-    //const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
-
-    const fetchAllListingsSeller = async () => {
-      const response = await fetch('http://35.213.172.32/staff/reported-listing')
-      const data = await response.json();
-      console.log(data);
-      setListings(data);
-      console.log(listingsData);
-  };
-
-    useEffect(() => {
-      verify(undefined)
-			.unwrap()
-			.then((response) => {
-        setUserId(response.id);
-        fetchAllListingsSeller();
-			});
-
-        //console.log(user?.id)
-        console.log("hai")
-        console.log(userId)
-    }, [userId]);
-  
     return (
-      <div>
-        {listingsData && userId && <AllListingList listings={listingsData} userId={userId} />}
-      </div>
+        <div className="listing-list">
+            <div className="flex justify-center my-8">
+                <a href="/catalogue/create" className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+                    Add New Listing
+                </a>
+            </div>
+
+            <div className="flex justify-center my-8">
+                <a href="/catalogue/order" className="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none">
+                    Orders Management
+                </a>
+            </div>
+        </div>
     );
 }
