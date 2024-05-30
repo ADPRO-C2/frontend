@@ -22,7 +22,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
 
     const ignoreListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://35.213.172.32/reported-listing/ignore/${listingId}`, {
+            const response = await fetch(`http://35.213.172.32/staff/reported-listing/ignore/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
 
     const removeListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://35.213.172.32/reported-listing/remove/${listingId}`, {
+            const response = await fetch(`http://35.213.172.32/staff/reported-listing/remove/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

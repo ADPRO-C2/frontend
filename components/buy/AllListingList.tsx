@@ -41,7 +41,7 @@ const AllListingList: React.FC<AllListingListProps> = ({ listings, userId }) => 
 
     const reportListing = async (listingId: string) => {
         try {
-            const response = await fetch(`http://35.213.172.32/reported-listing/add/${listingId}`, {
+            const response = await fetch(`http://35.213.172.32/staff/reported-listing/add/${listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
