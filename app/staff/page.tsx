@@ -1,35 +1,44 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import ListingList, { Listing } from '@/components/staff/ListingList';
+import ListingList, { Listing } from '@/components/sell/ListingList';
 import { GetServerSideProps } from 'next';
 import { useVerifyMutation } from '@/redux/features/authApiSlice';
 import { useGetProfileQuery } from '@/redux/features/authApiSlice';
+import AllListingList from "@/components/buy/AllListingList";
 
 
 export default function Page() {
-    const [listings, setListings] = useState<Listing[] >();
+    const [listingsData, setListings] = useState<Listing[] >();
+    const [userId, setUserId] = useState<number>();
     const [verify, isLoading] = useVerifyMutation();
 
     //const { data: user, isLoading, isFetching, refetch } = useGetProfileQuery();
 
-    const fetchAllListings = async () => {
-      const response = await fetch(`http://34.87.41.75/staff/reported-listing`)
+    const fetchAllListingsSeller = async () => {
+      const response = await fetch('http://34.142.129.98/api/listings')
       const data = await response.json();
+      console.log(data);
       setListings(data);
-    };
+      console.log(listingsData);
+  };
 
     useEffect(() => {
       verify(undefined)
 			.unwrap()
 			.then((response) => {
-              fetchAllListings();
+        setUserId(response.id);
+        fetchAllListingsSeller();
 			});
-    }, []);
+
+        //console.log(user?.id)
+        console.log("hai")
+        console.log(userId)
+    }, [userId]);
   
     return (
       <div>
-        {listings && <ListingList listings={listings}/>}
+        {listingsData && userId && <AllListingList listings={listingsData} userId={userId} />}
       </div>
     );
 }
